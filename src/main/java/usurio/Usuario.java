@@ -5,6 +5,7 @@ import usurio.events.*;
 import usurio.values.*;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class Usuario extends AggregateEvent<IdUsuario> {
@@ -59,14 +60,46 @@ public class Usuario extends AggregateEvent<IdUsuario> {
     }
 
 
-    public void editarNombre(Nombre nombre){
+   public void editarNombre(Nombre nombre){
+
         this.nombre = Objects.requireNonNull(nombre);
     }
+   /* public void editarNombre(Nombre nombre){
+        appendChange(new NombreEditado(nombre)).apply();
+    }*/
     public void editarCedula(Cedula cedula){
+
         this.cedula = Objects.requireNonNull(cedula);
     }
     public void editarDireccion(Direccion direccion){
         this.direccion = Objects.requireNonNull(direccion);
     }
+    public Optional<Cuenta> getCuentaPorId(IdCuenta entityId){
+        return cuenta()
+                .stream()
+                .filter(cuenta -> cuenta.identity().equals(entityId))
+                .findFirst();
+    }
+    public Optional<Carnet> getCarnetPorId(IdCarnet entityId){
+        return carnet()
+                .stream()
+                .filter(carnet -> carnet.identity().equals(entityId))
+                .findFirst();
+    }
 
+    public Nombre nombre(){
+        return nombre;
+    }
+    public Cedula cedula(){
+        return cedula;
+    }
+    public Direccion direccion(){
+        return direccion;
+    }
+    public Set<Cuenta> cuenta(){
+        return cuenta;
+    }
+    protected Set<Carnet> carnet(){
+        return  carnet;
+    }
 }

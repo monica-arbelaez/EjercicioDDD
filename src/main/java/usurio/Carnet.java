@@ -1,7 +1,6 @@
 package usurio;
 
 import co.com.sofka.domain.generic.Entity;
-import usurio.values.Email;
 import usurio.values.FechaDeVencimiento;
 import usurio.values.IdCarnet;
 
@@ -19,5 +18,8 @@ public class Carnet extends Entity<IdCarnet> {
     public void ActualizarFechaDeVencimiento(FechaDeVencimiento fechaDeVencimiento) {
         this.fechaDeVencimiento = Objects.requireNonNull(fechaDeVencimiento);
 
+    }
+    public FechaDeVencimiento fechaDeVencimiento() {
+        return fechaDeVencimiento;
     }
 }
