@@ -1,18 +1,16 @@
 package usurio.events;
 
 import co.com.sofka.domain.generic.DomainEvent;
-import usurio.values.Cedula;
-import usurio.values.Direccion;
-import usurio.values.Nombre;
+import usurio.values.*;
 
-public class UsuarioRegistrado extends DomainEvent {
+public class UsuarioModificado extends DomainEvent {
     private final Nombre nombre;
     private final Cedula cedula;
     private final Direccion direccion;
 
 
-    public UsuarioRegistrado( Nombre nombre, Cedula cedula, Direccion direccion) {
-        super("biblioteca.usuario.usuarioregistrado");
+    public UsuarioModificado(IdUsuario entityId, Nombre nombre, Cedula cedula, Direccion direccion) {
+        super("biblioteca.usuario.usuariomodificado");
         this.nombre = nombre;
         this.cedula = cedula;
         this.direccion = direccion;
@@ -22,6 +20,7 @@ public class UsuarioRegistrado extends DomainEvent {
     public Nombre getNombre() {
         return nombre;
     }
+
     public Cedula getCedula() {
         return cedula;
     }

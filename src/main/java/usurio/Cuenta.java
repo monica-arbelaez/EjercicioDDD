@@ -6,15 +6,14 @@ import usurio.values.*;
 import java.util.Objects;
 
 public class Cuenta extends Entity <IdCuenta>{
-    private  Sancion sancion;
     private Email email;
-    private Contraseña contraseña;
+    private Contrasena contrasena;
 
 
-    public Cuenta(IdCuenta entityId, Email email, Contraseña contraseña) {
+    public Cuenta(IdCuenta entityId, Email email, Contrasena contrasena) {
         super(entityId);
         this.email = email;
-        this.contraseña = contraseña;
+        this.contrasena = contrasena;
     }
 
     public void ActualizarEmail(Email email) {
@@ -22,8 +21,8 @@ public class Cuenta extends Entity <IdCuenta>{
 
     }
 
-    public Sancion sancion(){
-        return sancion;
+    public Contrasena contasena(){
+        return contrasena;
     }
 
     public Email email() {
