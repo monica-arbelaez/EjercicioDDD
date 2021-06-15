@@ -20,6 +20,9 @@ public class Cuenta extends Entity <IdCuenta>{
         this.email = Objects.requireNonNull(email);
 
     }
+    public void ActualizarContrasena(Contrasena contrasena){
+        this.contrasena = Objects.requireNonNull(contrasena);
+    }
 
     public Contrasena contasena(){
         return contrasena;

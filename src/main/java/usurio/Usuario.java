@@ -39,20 +39,6 @@ public class Usuario extends AggregateEvent<IdUsuario> {
 
         appendChange(new CuentaAgregada(entityId, contrasena, email)).apply();
     }
-
-    public void modificiarContraseña(IdCuenta entityId, Contrasena contrasena){
-        Objects.requireNonNull(entityId);
-        Objects.requireNonNull(contrasena);
-        appendChange(new ContrasenaModificada(entityId, contrasena)).apply();
-    }
-
-    public void modificarEmail(IdCuenta entityId, Email email){
-        Objects.requireNonNull(entityId);
-        Objects.requireNonNull(email);
-
-        appendChange(new EmailModificado(entityId, email)).apply();
-    }
-
     public void modificarCuenta(Cuenta cuenta){
         Objects.requireNonNull(cuenta);
         appendChange(new CuentaModificada(cuenta)).apply();
@@ -64,6 +50,14 @@ public class Usuario extends AggregateEvent<IdUsuario> {
 
         appendChange(new CarnetCreado(entityId, fechaDeVencimiento)).apply();
     }
+
+    public void crearModificado(IdCarnet entityId, FechaDeVencimiento fechaDeVencimiento){
+        Objects.requireNonNull(entityId);
+        Objects.requireNonNull(fechaDeVencimiento);
+
+        appendChange(new CarnetModificado(entityId, fechaDeVencimiento)).apply();
+    }
+
 
     public void editarNombre(Nombre nombre){
         this.nombre = Objects.requireNonNull(nombre);
