@@ -8,6 +8,8 @@ import java.util.Objects;
 public class Cuenta extends Entity <IdCuenta>{
     private Email email;
     private Contrasena contrasena;
+    private IdCuenta idCuenta;
+
 
 
     public Cuenta(IdCuenta entityId, Email email, Contrasena contrasena) {
@@ -32,5 +34,15 @@ public class Cuenta extends Entity <IdCuenta>{
         return email;
     }
 
+    public Email getEmail() {
+        return email;
+    }
 
+    public Contrasena getContrasena() {
+        return contrasena;
+    }
+
+    public IdCuenta getIdCuenta() {
+        return idCuenta;
+    }
 }

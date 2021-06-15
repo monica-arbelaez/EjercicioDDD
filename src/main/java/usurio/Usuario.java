@@ -10,18 +10,25 @@ import java.util.Set;
 
 public class Usuario extends AggregateEvent<IdUsuario> {
 
+
     protected Nombre nombre;
     protected Cedula cedula;
     protected Direccion direccion;
-    protected Set<Cuenta> cuenta;
-    protected Set<Carnet> carnet;
+    protected Cuenta cuenta;
+    protected Carnet carnet;
 
 
     public Usuario(IdUsuario entityId, Nombre nombre, Cedula cedula, Direccion direccion){
 
         super(entityId);
         appendChange(new UsuarioRegistrado(nombre,cedula,direccion)).apply();
+    }
 
+    // para afectar los estados se impleneta un constructor privado
+    private Usuario(IdUsuario entityId){
+        super(entityId);
+        // esta pendiente del evento para cambiar el estado
+        subscribe((new UsuarioChange(this)));
     }
 
     public void modificarUsuario(IdUsuario entityId, Nombre nombre, Cedula cedula, Direccion direccion){
@@ -33,30 +40,30 @@ public class Usuario extends AggregateEvent<IdUsuario> {
         appendChange(new UsuarioModificado(entityId,nombre,cedula,direccion)).apply();
     }
 
-    public void agregarCuenta(IdCuenta entityId, Contrasena contrasena, Email email){
-        Objects.requireNonNull(entityId);
+    public void agregarCuenta(IdCuenta idCuenta, Contrasena contrasena, Email email){
+        Objects.requireNonNull(idCuenta);
         Objects.requireNonNull(email);
         Objects.requireNonNull(contrasena);
 
-        appendChange(new CuentaAgregada(entityId, contrasena, email)).apply();
+        appendChange(new CuentaAgregada(idCuenta, contrasena, email)).apply();
     }
     public void modificarCuenta(Cuenta cuenta){
         Objects.requireNonNull(cuenta);
         appendChange(new CuentaModificada(cuenta)).apply();
     }
 
-    public void crearCarnet(IdCarnet entityId, FechaDeVencimiento fechaDeVencimiento){
-        Objects.requireNonNull(entityId);
+    public void crearCarnet(IdCarnet idCarnet, FechaDeVencimiento fechaDeVencimiento){
+        Objects.requireNonNull(idCarnet);
         Objects.requireNonNull(fechaDeVencimiento);
 
-        appendChange(new CarnetCreado(entityId, fechaDeVencimiento)).apply();
+        appendChange(new CarnetCreado(idCarnet, fechaDeVencimiento)).apply();
     }
 
-    public void crearModificado(IdCarnet entityId, FechaDeVencimiento fechaDeVencimiento){
-        Objects.requireNonNull(entityId);
+    public void modificarCarnet(IdCarnet idCarnet, FechaDeVencimiento fechaDeVencimiento){
+        Objects.requireNonNull(idCarnet);
         Objects.requireNonNull(fechaDeVencimiento);
 
-        appendChange(new CarnetModificado(entityId, fechaDeVencimiento)).apply();
+        appendChange(new CarnetModificado(idCarnet, fechaDeVencimiento)).apply();
     }
 
 
@@ -64,9 +71,7 @@ public class Usuario extends AggregateEvent<IdUsuario> {
 
         this.nombre = Objects.requireNonNull(nombre);
     }
-   /* public void editarNombre(Nombre nombre){
-        appendChange(new NombreEditado(nombre)).apply();
-    }*/
+
     public void editarCedula(Cedula cedula){
 
         this.cedula = Objects.requireNonNull(cedula);
@@ -74,18 +79,7 @@ public class Usuario extends AggregateEvent<IdUsuario> {
     public void editarDireccion(Direccion direccion){
         this.direccion = Objects.requireNonNull(direccion);
     }
-    public Optional<Cuenta> getCuentaPorId(IdCuenta entityId){
-        return cuenta()
-                .stream()
-                .filter(cuenta -> cuenta.identity().equals(entityId))
-                .findFirst();
-    }
-    public Optional<Carnet> getCarnetPorId(IdCarnet entityId){
-        return carnet()
-                .stream()
-                .filter(carnet -> carnet.identity().equals(entityId))
-                .findFirst();
-    }
+//
 
     public Nombre nombre(){
         return nombre;
@@ -96,10 +90,12 @@ public class Usuario extends AggregateEvent<IdUsuario> {
     public Direccion direccion(){
         return direccion;
     }
-    public Set<Cuenta> cuenta(){
+    public Cuenta cuenta(){
         return cuenta;
     }
-    protected Set<Carnet> carnet(){
+    protected Carnet carnet(){
         return  carnet;
     }
+
+
 }

@@ -9,9 +9,9 @@ import java.util.Objects;
 public class Carnet extends Entity<IdCarnet> {
 
     private FechaDeVencimiento fechaDeVencimiento;
+//    private IdCarnet idCarnet;
 
     public Carnet(IdCarnet entityId, FechaDeVencimiento fechaDeVencimiento) {
-
         super(entityId);
         this.fechaDeVencimiento = fechaDeVencimiento;
     }
@@ -22,4 +22,8 @@ public class Carnet extends Entity<IdCarnet> {
     public FechaDeVencimiento fechaDeVencimiento() {
         return fechaDeVencimiento;
     }
+
+
+
+//
 }
