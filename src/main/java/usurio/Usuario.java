@@ -1,12 +1,12 @@
 package usurio;
 
 import co.com.sofka.domain.generic.AggregateEvent;
+import co.com.sofka.domain.generic.DomainEvent;
 import usurio.events.*;
 import usurio.values.*;
 
+import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 
 public class Usuario extends AggregateEvent<IdUsuario> {
 
@@ -29,6 +29,21 @@ public class Usuario extends AggregateEvent<IdUsuario> {
         super(entityId);
         // esta pendiente del evento para cambiar el estado
         subscribe((new UsuarioChange(this)));
+    }
+    // se crea un agregado que ya esta persistido y le palica cada evento
+    public static Usuario from(IdUsuario idUsuario, List<DomainEvent> events){
+       var usuario = new Usuario(idUsuario);
+       events.forEach(usuario::applyEvent);
+       return usuario;
+    }
+
+    public void AgregarUsuario(IdUsuario entityId, Nombre nombre, Cedula cedula, Direccion direccion){
+        Objects.requireNonNull(entityId);
+        Objects.requireNonNull(nombre);
+        Objects.requireNonNull(cedula);
+        Objects.requireNonNull(direccion);
+
+        appendChange(new UsuarioRegistrado(nombre,cedula,direccion)).apply();
     }
 
     public void modificarUsuario(IdUsuario entityId, Nombre nombre, Cedula cedula, Direccion direccion){
